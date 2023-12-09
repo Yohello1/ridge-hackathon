@@ -35,10 +35,53 @@
 */
 </script>
 
-<body>
-  <h1>Wintery Quiz</h1>
 
-  <h4>Practice for things with a twist, and with friends</h4>
+<style>
+body {
+    align-items: center;
+    text-align: center;
+    background-image: url('/snowflake.jpg');
+    font-family:courier;
+}
+h1
+{
+    text-align:center;
+    margin:auto;
+    background-color: white;
+    width:25%;
+}
+h2
+{
+    text-align:center;
+    margin:auto;
+    background-color: white;
+    width:25%;
+}
+
+p
+{
+    width:40%;
+    margin:auto;
+}
+
+.spanBack
+{
+background-color:#FFF;
+height:500px;
+width:50%;
+margin-left:25%;
+position:absolute;
+top:0;
+z-index:-100;
+}
+
+</style>
+
+
+<body>
+
+  <h1>Wintery Quiz</h1>
+  <h4>Practice in Style!</h4>
 
   <h2>Join Room </h2>
   <form id="room" action="/snow.html" method="get">
@@ -46,7 +89,7 @@
     <input type="text" name="room_id" id="room_id" required/>
     <br>
     <label for"name">name</label>
-    <input type="text" name="name" id="name" required/>
+    <input type="text" name="Name" id="name" required/>
     <br>
     <label for"type">Create or Join? </label>
 
@@ -54,8 +97,20 @@
       <option value="join">Join</option>
       <option value="create">Create</option>
     </select>
-    <button>Send</button>
+    <button>Go!</button>
   </form>
+
+
+  <br>
+  <br>
+  <h2>About</h2>
+  <p> Sometimes when you're studying you might get bored, and want to play with friends, who will distract you. Instead of getting onto a game like Valorant, or Apex Legends, hop on this game and draw a picture with your friends whilst practicing your skills </p>
+
+
+
+  <div class="spanBack">
+  </div>
+
 
 
 </body>

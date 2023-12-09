@@ -27,13 +27,13 @@
       const response = await fetch("/temp.txt");
        questions = await response.json();
       console.log(questions["questions"][1]["q"]);
-      randInt = Math.floor(Math.random() * 6);
+      randInt = Math.floor(Math.random() * questions["questions"].length);
 
       var workNot = true;
       while(workNot)
       {
         tempID.innerHTML = questions["questions"][randInt]["q"];
-        if( questions["questions"][randInt]["q"] != '')
+        if( questions["questions"][1]["q"] != '')
         {
             workNot = false;
         }
@@ -139,7 +139,7 @@
       var textAnswer = document.getElementById('data1').value;
       if(textAnswer ==  questions["questions"][randInt]["a"])
          {
-             document.getElementById('data1').value = 0;
+             document.getElementById('data1').value = '';
              sendPoint = true;
              newQuestion();
 

@@ -60,7 +60,13 @@
 			"q":"Find y: 9*x=72",
 			"a":"8"
 		},
-
-
+		{
+			"q":"Is HCL an Acid?(yes/no)",
+			"a":"yes"
+		},
+		{
+			"q":"Is NaOH an Acid?(yes/no)",
+			"a":"yes"
+		}
 	]
 }
