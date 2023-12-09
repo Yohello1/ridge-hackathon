@@ -2,11 +2,20 @@
   <title>Winter Quiz</title>
 </Head>
 <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.js"></script>
+<script src="sketch.js"></script>
 
 <script>
   var socket = io();
 
-  var tempID = Math.random();
+  var tempID;
+  var num;
+  var currentPoint = {"x" : 0, "y" : 0};
+  var sendPoint = false;
+  var submitData;
+  var questions;
+
+  
   console.log(tempID);
   
   console.log("Socket Created ");
@@ -14,9 +23,12 @@
 
   async function newQuestion()
   {
-  const response = await fetch("/temp.txt");
-  const questions = await response.json();
-  console.log("boobs" + questions["questions"][1]["q"]);
+      const response = await fetch("/temp.txt");
+       questions = await response.json();
+      console.log(questions["questions"][1]["q"]);
+      randInt = Math.floor(Math.random() * 6);
+      tempID.innerHTML = questions["questions"][randInt]["q"];
+  
   }
 
 
@@ -34,9 +46,13 @@
         console.log(params.type);
 
         socket.emit('room_connect', params.room_id);
-
-        
         socket.emit('comp', params.room_id);
+
+        tempID = document.getElementById("question");
+
+        submitData = document.getElementById("bob");
+        submitData.addEventListener("click", checkAnswer);
+        
     }
 
 
@@ -48,7 +64,7 @@
   })(window, document, undefined);
 
 
-  var intervalID = window.setInterval(myCallback, 1500);
+  // var intervalID = window.setInterval(myCallback, 1500);
 
 
   
@@ -62,15 +78,59 @@
   }
 
   socket.on("newDot", (arg) =>
-    {
-        console.log(arg); // world
-  });
+      {
+          currentPoint = arg;
+      });
 
+  function setup() {
+      createCanvas(1024, 1024);
+      background(255);
+  }
+
+  function draw() {
+      if (sendPoint)
+      {
+          if(mouseIsPressed)
+          {
+              console.log(sendPoint);
+              currentPoint = { "x" : mouseX, "y" : mouseY};
+              sendPoint = false;
+
+              socket.emit('die', currentPoint);
+          }
+      }
+
+      // console.log(mouseX + " " + mouseY);
+
+      ellipse(currentPoint.x, currentPoint.y, 5, 5);
+  }
+
+  function checkAnswer()
+  {
+      var textAnswer = document.getElementById('data1').value;
+      if(textAnswer ==  questions["questions"][randInt]["a"])
+         {
+             document.getElementById('data1').value = 0;
+             sendPoint = true;
+             newQuestion();
+
+             console.log(sendPoint);
+             
+         }
+      return false;
+  }
 
 
 </script>
 
+
+
 <body>
-  <h1>Wintery Quiz</h1>
-  <h2 id="question"> hi </h2>
+    <h1>Wintery Quiz</h1>
+    <h2 id="question"></h2>
+    <form onsubmit="return false;">
+      <label id="question"></label>
+      <input type="text" name="form" id="data1" required/>
+      <button id="bob">Send</button>
+    </form>
 </body>

@@ -7,7 +7,7 @@ const fs = require("fs");
 
 var nextProblem = '';
 
-//Whenever someone connects this gets executed
+//Whenever someone connects this getns executed
 io.on('connection', function(socket) {
     console.log('A user connected');
 
@@ -29,17 +29,12 @@ io.on('connection', function(socket) {
     socket.on('comp', (msg) => {
         socket.join(msg.room_id);
         socket.to('asd').emit("newDot", msg);
-        console.log("name " + msg.name);
-
-        getRandomLine("dev/mathProblems.txt", null);
-
-        socket.to(socket.id).emit('private', "tititittiti");
-
     })
 
-    socket.on('die', (msg) =>
+    socket.on('die', (args) =>
         {
-            console.log(msg);
+            socket.to('asd').emit('newDot', args);
+            console.log("HELLO WORLD");
         })
 
  });
@@ -66,6 +61,16 @@ app.get('/temp.txt', (req, res) => {
     res.sendFile(__dirname + '/dev/mathProblems.txt');
 });
 
+app.get('/temp.txt', (req, res) => {
+    console.log("printing from the server sending");
+    getRandomLine("dev/mathProblems.txt", null);
+    res.sendFile(__dirname + '/dev/mathProblems.txt');
+});
+
+app.get('/sketch.js', (req, res) => {
+    console.log("printing from the server sending");
+    res.sendFile(__dirname + '/dev/sketch.js');
+});
 
 
 
