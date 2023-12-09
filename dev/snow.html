@@ -28,7 +28,20 @@
        questions = await response.json();
       console.log(questions["questions"][1]["q"]);
       randInt = Math.floor(Math.random() * 6);
-      tempID.innerHTML = questions["questions"][randInt]["q"];
+
+      var workNot = true;
+      while(workNot)
+      {
+        tempID.innerHTML = questions["questions"][randInt]["q"];
+        if( questions["questions"][randInt]["q"] != '')
+        {
+            workNot = false;
+        }
+        else
+        {
+            workNot = true;
+        }
+      }
   
   }
 

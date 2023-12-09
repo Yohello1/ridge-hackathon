@@ -40,7 +40,7 @@ io.on('connection', function(socket) {
 // This displays message that the server is running and listening to specified port
 http.listen(port, () => console.log(`Listening on port ${port}`)); //Line 6
 
-// create a GET route
+//  a GET route
 app.get('/', (req, res) => {
     console.log("printing from the server f3f134g");
   res.sendFile(__dirname + '/dev/index.html');
