@@ -33,6 +33,12 @@ io.on('connection', function(socket) {
             socket.to(args.room_id).emit('newDot', args);
         })
 
+    socket.on('sendName', (args) =>
+        {
+            socket.to(args.room_id).emit('joined', args);
+        })
+
+
  });
 
 

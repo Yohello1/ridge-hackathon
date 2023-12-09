@@ -15,13 +15,15 @@
   var sendPoint = false;
   var submitData;
   var questions;
+  var joined;
 
   
   console.log(tempID);
   
   console.log("Socket Created ");
   const params = new Proxy(new URLSearchParams(window.location.search), {get: (searchParams, prop) => searchParams.get(prop), });
-
+  const delay = ms => new Promise(res => setTimeout(res, ms));
+  
   async function newQuestion()
   {
       const response = await fetch("/temp.txt");
@@ -60,20 +62,18 @@
         console.log(params.type);
 
         socket.emit('room_connect', params.room_id);
+        socket.emit('sendName', params.Name);   
         socket.emit('comp', params.room_id);
 
         tempID = document.getElementById("question");
 
         submitData = document.getElementById("bob");
         submitData.addEventListener("click", checkAnswer);
+        joinedID = document.getElementById("joinedPPL");
         
     }
 
-
       newQuestion();
-
-      
-      
 
   })(window, document, undefined);
 
@@ -97,6 +97,14 @@
           currentPoint = arg;
           strokeWeight(5);
           point(currentPoint.x, currentPoint.y);
+      });
+
+  socket.on("joined", (arg) =>
+      {
+          joinedID.innerHTML = arg + " joined";
+          setTimeout(function(){
+              joinedID.innerHTML = '';
+          }, 3000);
       });
 
   function setup() {
@@ -209,6 +217,12 @@ h2
     background-color: white;
     width:25%;
 }
+
+h3
+{
+position:fixed;
+float:left;
+}
 </style>
 
 
@@ -231,6 +245,8 @@ h2
         <option value="purple">Purple</option>
       </select>
     </select>
-
     </form>
+
+    <h3 id="joinedPPL">
+    </h3>
 </body>
