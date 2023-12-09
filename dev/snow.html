@@ -1,0 +1,76 @@
+<Head>
+  <title>Winter Quiz</title>
+</Head>
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+
+<script>
+  var socket = io();
+
+  var tempID = Math.random();
+  console.log(tempID);
+  
+  console.log("Socket Created ");
+  const params = new Proxy(new URLSearchParams(window.location.search), {get: (searchParams, prop) => searchParams.get(prop), });
+
+  async function newQuestion()
+  {
+  const response = await fetch("/temp.txt");
+  const questions = await response.json();
+  console.log("boobs" + questions["questions"][1]["q"]);
+  }
+
+
+  (function(window, document, undefined)
+  {
+
+   // code that should be taken care of right away
+
+    window.onload = init;
+
+    function init(){
+        // Get the value of "some_key" in eg "https://example.com/?some_key=some_value"
+        let value = params.some_key;
+        console.log(params.room_id);
+        console.log(params.type);
+
+        socket.emit('room_connect', params.room_id);
+
+        
+        socket.emit('comp', params.room_id);
+    }
+
+
+      newQuestion();
+
+      
+      
+
+  })(window, document, undefined);
+
+
+  var intervalID = window.setInterval(myCallback, 1500);
+
+
+  
+  function myCallback() {
+      var data =
+          {
+              "room" : params.room_id,
+              "name" : params.name
+          }
+      socket.emit('comp', data);
+  }
+
+  socket.on("newDot", (arg) =>
+    {
+        console.log(arg); // world
+  });
+
+
+
+</script>
+
+<body>
+  <h1>Wintery Quiz</h1>
+  <h2 id="question"> hi </h2>
+</body>

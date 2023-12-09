@@ -1,0 +1,61 @@
+<Head>
+  <title>Winter Quiz</title>
+</Head>
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+
+<script>
+
+/*
+  var socket = io();
+  console.log("Socket Created ");
+
+  (function(window, document, undefined) {
+
+  // code that should be taken care of right away
+
+  window.onload = init;
+
+  function init(){
+      console.log("LOADED");
+      var form = document.getElementById('room');
+      var input = document.getElementById('room_id');
+
+      form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          if (input.value)
+          {
+              socket.emit('message', input.value);
+              input.value = '';
+          }   
+  });
+  
+  }
+
+})(window, document, undefined);
+*/
+</script>
+
+<body>
+  <h1>Wintery Quiz</h1>
+
+  <h4>Practice for things with a twist, and with friends</h4>
+
+  <h2>Join Room </h2>
+  <form id="room" action="/snow.html" method="get">
+    <label for="id">Enter your room id: </label>
+    <input type="text" name="room_id" id="room_id" required/>
+    <br>
+    <label for"name">name</label>
+    <input type="text" name="name" id="name" required/>
+    <br>
+    <label for"type">Create or Join? </label>
+
+    <select name="type" id="type">
+      <option value="join">Join</option>
+      <option value="create">Create</option>
+    </select>
+    <button>Send</button>
+  </form>
+
+
+</body>
