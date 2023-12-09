@@ -19,10 +19,7 @@ io.on('connection', function(socket) {
     });
 
     socket.on('room_connect', (msg) => {
-        console.log('message: ' + msg);
         socket.join(msg);
-        console.log("Joined " + msg);
-
     });
 
 
@@ -33,8 +30,7 @@ io.on('connection', function(socket) {
 
     socket.on('die', (args) =>
         {
-            socket.to('asd').emit('newDot', args);
-            console.log("HELLO WORLD");
+            socket.to(args.room_id).emit('newDot', args);
         })
 
  });
@@ -71,6 +67,12 @@ app.get('/sketch.js', (req, res) => {
     console.log("printing from the server sending");
     res.sendFile(__dirname + '/dev/sketch.js');
 });
+
+app.get('/snowflake.jpg', (req, res) => {
+    console.log("printing from the server sending");
+    res.sendFile(__dirname + '/dev/snowflake.jpg');
+});
+
 
 
 

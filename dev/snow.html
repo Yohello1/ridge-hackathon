@@ -11,6 +11,7 @@
   var tempID;
   var num;
   var currentPoint = {"x" : 0, "y" : 0};
+  var coloR = { "r":0, "g":0, "b":0}
   var sendPoint = false;
   var submitData;
   var questions;
@@ -79,7 +80,10 @@
 
   socket.on("newDot", (arg) =>
       {
+          stroke(arg.r, arg.g, arg.b);
           currentPoint = arg;
+          strokeWeight(5);
+          point(currentPoint.x, currentPoint.y);
       });
 
   function setup() {
@@ -96,13 +100,25 @@
               currentPoint = { "x" : mouseX, "y" : mouseY};
               sendPoint = false;
 
-              socket.emit('die', currentPoint);
+              var toSend =
+                  {
+                      "x" : mouseX,
+                      "y" : mouseY,
+                      "room_id" : params.room_id,
+                      "r" : coloR.r,
+                      "g" : coloR.g,
+                      "b" : coloR.g
+                  }
+
+              socket.emit('die', toSend);
+              stroke(coloR.r,coloR.g,coloR.b);
+              strokeWeight(5);
+              point(currentPoint.x, currentPoint.y);
           }
       }
 
       // console.log(mouseX + " " + mouseY);
 
-      ellipse(currentPoint.x, currentPoint.y, 5, 5);
   }
 
   function checkAnswer()
@@ -115,6 +131,41 @@
              newQuestion();
 
              console.log(sendPoint);
+
+             switch(document.getElementById('colorType').value)
+             {
+                 case "red":
+                   coloR.r = 242;
+                   coloR.g = 38;
+                   coloR.b = 19;
+                   break;
+                 case "orange":
+                   coloR.r = 255;
+                   coloR.g = 14;
+                   coloR.b = 0;
+                   break;
+                 case "yellow":
+                   coloR.r = 255;
+                   coloR.g = 255;
+                   coloR.b = 0;
+                   break;
+                 case "green":
+                   coloR.r = 0;
+                   coloR.g = 128;
+                   coloR.b = 0;
+                   break;
+                 case "blue":
+                   coloR.r = 0;
+                   coloR.g = 0;
+                   coloR.b = 205;
+                   break;
+                 case "purple":
+                   coloR.r = 148;
+                   coloR.g = 0;
+                   coloR.b = 211;
+                   break;
+
+             }
              
          }
       return false;
@@ -124,13 +175,49 @@
 </script>
 
 
+<style>
+body {
+    align-items: center;
+    text-align: center;
+    background-image: url('/snowflake.jpg');
+    font-family:courier;
+}
+h1
+{
+    text-align:center;
+    margin:auto;
+    background-color: white;
+    width:25%;
+}
+h2
+{
+    text-align:center;
+    margin:auto;
+    background-color: white;
+    width:25%;
+}
+</style>
+
+
 
 <body>
     <h1>Wintery Quiz</h1>
+    <br>
     <h2 id="question"></h2>
     <form onsubmit="return false;">
       <label id="question"></label>
       <input type="text" name="form" id="data1" required/>
       <button id="bob">Send</button>
+
+      <select name="type" id="colorType">
+        <option value="red">Red</option>
+        <option value="orange">Orange</option>
+        <option value="yellow">Yellow</option>
+        <option value="green">Green</option>
+        <option value="blue">Blue</option>
+        <option value="purple">Purple</option>
+      </select>
+    </select>
+
     </form>
 </body>
